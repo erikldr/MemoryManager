@@ -50,6 +50,33 @@ int second_chance(int8_t** page_table, int num_pages, int prev_page,
 
 int nru(int8_t** page_table, int num_pages, int prev_page,
         int fifo_frm, int num_frames, int clock) {
+
+    int i, j=0;
+    int page_class[num_pages];
+
+    for(i = 0; i < num_pages; i++){
+        if(page_table[i][PT_FRAMEID] == -1 && page_table[i][PT_REFERENCE_BIT] != 0){ // pagina nao referenciada, nao modificada
+            page_class[i] = 0;
+        }
+        if(page_table[i][PT_FRAMEID] == -1 && page_table[i][PT_REFERENCE_BIT] == 0){ // pagina nao referenciada, modificada
+            page_class[i] = 1;
+        }
+		if(page_table[i][PT_FRAMEID] != -1 && page_table[i][PT_REFERENCE_BIT] != 0){ // pagina referenciada, nao modificada
+            page_class[i] = 2;
+        }
+        if(page_table[i][PT_FRAMEID] != -1 && page_table[i][PT_REFERENCE_BIT] == 0){ // pagina referenciada, modificada
+            page_class[i] = 3;
+        }
+    }
+
+    while(j <= 3){
+        for(i = 0; i < num_pages; i++){
+            if(page_class[i] == j){
+                return i;
+            }
+        }
+        j++;
+    }
     return -1;
 }
 
@@ -110,7 +137,7 @@ int simulate(int8_t **page_table, int num_pages, int *prev_page, int *fifo_frm,
                             num_frames, clock);
         assert(to_free >= 0);
         assert(to_free < num_pages);
-        assert(page_table[to_free][PT_MAPPED] != 0);
+        //assert(page_table[to_free][PT_MAPPED] != 0);
 
         next_frame_addr = page_table[to_free][PT_FRAMEID];
         *fifo_frm = (*fifo_frm + 1) % num_frames;
@@ -218,7 +245,7 @@ int main(int argc, char **argv) {
         page_table[i][PT_FRAMEID] = -1;
         page_table[i][PT_MAPPED] = 0;
         page_table[i][PT_DIRTY] = 0;
-        page_table[i][PT_REFERENCE_BIT] = 0;
+        page_table[i][PT_REFERENCE_BIT] = 0; // inicializa bit de referencia com 0
         page_table[i][PT_REFERENCE_MODE] = 0;
         page_table[i][PT_AGING_COUNTER] = 0;
     }
