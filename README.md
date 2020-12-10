@@ -10,14 +10,15 @@ Erik Lucas da Rocha - 2732
         
 Paulo Gabriel Pimenta Gomes - 3687
 
-Foi disponibilizado pelo professor o codigo base, onde a partir dali deveriamos implementar a função do gerenciador de memória escolhida e a partir dela realizar testes e comparar os resultados com o gerenciador de memória random.
+Foi disponibilizado pelo professor o codigo base, onde a partir dali deveriamos implementar a função do gerenciador de memória escolhida e assim realizar testes e comparar os resultados com o gerenciador de memória random.
 
 ### Como executar:
 
-**Tutorial:**
+1 - Acessar a pasta do arquivo pelo terminal Linux 
+2 - Para compilar o códig digitar o seguinte comando : gcc -Wall vmm.c -o vm 
+3 - Para executar: ./vmm nru 10 < anomaly.dat
 
-Acessar a pasta do arquivo pelo terminal Linux, em seguida digitar o seguinte comando: gcc -Wall vmm.c -o vm com isso o arquivo sera compilado.
-Para executar basta ainda no terminal digitar o comando: ./vmm nru 10 < anomaly.dat sera mostrado no terminal o resultado da execução.
+Apos isso o resultado sera mostrado no terminal.
 
 **Explicação:**
 
@@ -31,11 +32,13 @@ O page fault (que é o que analisamos neste projeto) acontece quando uma aplica�
 A titulo de comparação abaixo o resultado de 10 execuções dos dois gerenciadores de memória.
 
 Random: {9, 10, 8, 8, 7, 8, 9, 7, 10, 9}
+
 NRU: {7, 7, 7, 7, 7, 7, 7, 7, 7, 7}
 
 Média de page faults dos gerenciadores:
 
 Random: 8.5
+
 NRU: 7
          
 ### Resultados:
